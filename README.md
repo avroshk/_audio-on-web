@@ -41,6 +41,8 @@ Real topics I want to cover:
 * Use graphs or charts library to draw waveform
 6) How to make Audio Workers work with React?
 7) Handling cross-browser things
+8) Going to production
+* Building projects
 
 Scope Down:
 1) Why choose React to demonstrate this?
