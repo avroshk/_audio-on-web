@@ -29,6 +29,12 @@ All about Audio on web.
 
 Real topics I want to cover:
 1) Setting React with Web Audio API
+2) Understand audio thread vs. render thread
+3) Understand Data-flow (why Redux?)
 2) Using D3 or a graphics library with React to draw Waveform
 3) Handling cross-browser things
 4) How to make Audio Workers work with React?
+
+Scope Down:
+1) Why choose React to demonstrate this?
+* It gives a way to 
