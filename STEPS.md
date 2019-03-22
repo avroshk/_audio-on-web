@@ -1,3 +1,5 @@
+# Session 1
+
 1. `yarn create react-app audio-on-web`
 2. `yarn start`
 3. Remove jargon on App.js
@@ -11,3 +13,9 @@
   - Set stop after 1 sec
   - Discover that you can play multiple oscillators (log oscillatorNode) -> (https://developer.mozilla.org/en-US/docs/Web/API/OscillatorNode)
   - Add Envelopes
+
+# Session 2
+
+1. Render oscillator count
+  - Add oscillators to state
+2. Create Oscillator render component
