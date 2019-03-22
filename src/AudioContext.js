@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 
+import Oscillator from './Oscillator.js'
+
 const IS_WEB_AUDIO_SUPPORTED = window.AudioContext || window.webkitAudioContext ? true : false
 const audioCtx = IS_WEB_AUDIO_SUPPORTED ? window.AudioContext || window.webkitAudioContext : null
 
@@ -92,6 +94,14 @@ class AudioContext extends Component {
           <div>{this.state.audioContext ? this.state.audioContext.state : "Not Initialized"}</div>
           Oscillators:
           <div>{this.state.oscillators.length}</div>
+          {this.state.oscillators.map((osc) =>
+            <Oscillator
+              minFreq={minFreq}
+              maxFreq={maxFreq}
+              key={osc.__resource_id__}
+              freq={osc.frequency.value}
+              />
+          )}
       </div>
     );
   }
