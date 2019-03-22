@@ -1,3 +1,3 @@
-`yarn create react-app audio-on-web`
+1. `yarn create react-app audio-on-web`
 
-`yarn start`
+2. `yarn start`
