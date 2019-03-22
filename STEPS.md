@@ -8,6 +8,6 @@
 7. The REACT way!
   - We need to control when the Context is created.
   - Play the oscillator on click
-  - Set stop after 2 secs
-  - Discover that you can play multiple oscillators
+  - Set stop after 1 sec
+  - Discover that you can play multiple oscillators (log oscillatorNode) -> (https://developer.mozilla.org/en-US/docs/Web/API/OscillatorNode)
   - Add Envelopes

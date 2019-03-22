@@ -13,21 +13,32 @@ class AudioContext extends Component {
 
   play = (e) => {
     let oscillatorNode = this.state.audioContext.createOscillator()
+    let gainNode = this.state.audioContext.createGain()
+
     console.log('New oscillator created.')
 
     oscillatorNode
+      .connect(gainNode)
       .connect(this.state.audioContext.destination)
 
     oscillatorNode.onended = () => {
       console.log('Okay that is enough. Stop it!')
     }
 
+    oscillatorNode.type = 'sine'
+    // value in hertz and seconds
+    oscillatorNode.frequency.setValueAtTime(620, this.state.audioContext.currentTime+0.5)
+
+    gainNode.gain.setValueAtTime(0, this.state.audioContext.currentTime)
+    gainNode.gain.linearRampToValueAtTime(0.8, this.state.audioContext.currentTime+0.5)
+
     oscillatorNode.start()
     console.log(oscillatorNode)
     console.log('Let us hear it.')
 
     // Stop after two seconds
-    oscillatorNode.stop(this.state.audioContext.currentTime+2)
+    gainNode.gain.linearRampToValueAtTime(0, this.state.audioContext.currentTime+1)
+    oscillatorNode.stop(this.state.audioContext.currentTime+1)
 
     /* https://medium.com/@wisecobbler/using-a-function-in-setstate-instead-of-an-object-1f5cfd6e55d1 */
     this.setState((prevState, props) => {
