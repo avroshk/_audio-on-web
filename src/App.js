@@ -10,7 +10,15 @@ if (audioCtx) {
   let oscillatorNode = ctx.createOscillator()
   oscillatorNode
     .connect(ctx.destination)
+
+  oscillatorNode.start()
   console.log('Let us hear it.')
+  console.log(ctx.state)
+  setTimeout(() => {
+    console.log('Okay that is enough.')
+    oscillatorNode.stop()
+  }, 5000)
+
 }
 
 class App extends Component {
