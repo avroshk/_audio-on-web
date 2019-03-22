@@ -6,30 +6,47 @@ const audioCtx = IS_WEB_AUDIO_SUPPORTED ? window.AudioContext || window.webkitAu
 class AudioContext extends Component {
   constructor(props) {
     super(props)
-    this.audioContext = IS_WEB_AUDIO_SUPPORTED ? new audioCtx() : null
-    console.log('Context Created.')
-    let oscillatorNode = this.audioContext.createOscillator()
+    this.state = {
+      audioContext: IS_WEB_AUDIO_SUPPORTED ? new audioCtx() : null
+    }
+  }
+
+  play = (e) => {
+    let oscillatorNode = this.state.audioContext.createOscillator()
+    console.log('New oscillator created.')
+
     oscillatorNode
-      .connect(this.audioContext.destination)
+      .connect(this.state.audioContext.destination)
+
+    oscillatorNode.onended = () => {
+      console.log('Okay that is enough. Stop it!')
+    }
 
     oscillatorNode.start()
+    console.log(oscillatorNode)
     console.log('Let us hear it.')
-    console.log(this.audioContext.state)
-    setTimeout(() => {
-      console.log('Okay that is enough.')
-      oscillatorNode.stop()
-    }, 5000)
+
+    // Stop after two seconds
+    oscillatorNode.stop(this.state.audioContext.currentTime+2)
+
+    /* https://medium.com/@wisecobbler/using-a-function-in-setstate-instead-of-an-object-1f5cfd6e55d1 */
+    this.setState((prevState, props) => {
+      return {
+        audioContext: prevState.audioContext
+      }
+    })
   }
 
   render() {
     return (
-      <div className="AudioContext">
+      <div className="AudioContext"
+        onClick={(e) => this.play(e)}>
           Is Web Audio Supported?
           <div>{IS_WEB_AUDIO_SUPPORTED ? "😊" : "😰"}</div>
-          Let's create AudioContext
+          AudioContext is available?
           <div>{audioCtx ? "😊" : "😰"}</div>
-          Status:
-          <div>{this.audioContext.state}</div>
+          AudioContext Status:
+          <div>{this.state.audioContext ? this.state.audioContext.state : "Not Initialized"}</div>
       </div>
     );
   }
