@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 
-const convertRange = ( value, r1, r2 ) => {
-  return ( value - r1[ 0 ] ) * ( r2[ 1 ] - r2[ 0 ] ) / ( r1[ 1 ] - r1[ 0 ] ) + r2[ 0 ];
+const convertRange = (num, [in_min, in_max] , [out_min, out_max]) => {
+  return (num - in_min) * (out_max - out_min) / (in_max - in_min) + out_min;
 }
 
 class Oscillator extends Component {
@@ -10,14 +10,18 @@ class Oscillator extends Component {
     const {
       freq,
       minFreq,
-      maxFreq
+      maxFreq,
+      gain
     } = this.props
-    
+
+    const style = {
+      top: '10%',
+      opacity: gain,
+      left: convertRange(freq , [minFreq, maxFreq], [0, window.innerWidth])
+    }
+
     return (
-      <div className="Oscillator" style={{
-        top: 60,
-        left: convertRange(freq , [minFreq, maxFreq], [0, window.innerWidth])
-      }}>{freq}</div>
+      <div className="Oscillator" style={style}></div>
     )
   }
 }

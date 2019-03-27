@@ -21,9 +21,9 @@ class AudioContext extends Component {
     }
   }
 
-  addOscillator = (oscillatorNode) => {
+  addOscillator = (oscillatorNode, gainNode) => {
     this.setState({
-      oscillators: this.state.oscillators.concat(oscillatorNode)
+      oscillators: this.state.oscillators.concat([[oscillatorNode, gainNode]])
     })
     console.log('New oscillator created.')
   }
@@ -39,7 +39,7 @@ class AudioContext extends Component {
   play = (e) => {
     let oscillatorNode = this.state.audioContext.createOscillator()
     let gainNode = this.state.audioContext.createGain()
-    this.addOscillator(oscillatorNode)
+    this.addOscillator(oscillatorNode, gainNode)
 
     oscillatorNode
       .connect(gainNode)
@@ -54,8 +54,8 @@ class AudioContext extends Component {
     oscillatorNode.type = 'sine'
     // value in hertz and seconds
     let freq = randomIntFromInterval(minFreq, maxFreq)
-    console.log(freq)
-    oscillatorNode.frequency.setValueAtTime(freq, this.state.audioContext.currentTime)
+    console.log('freq', freq)
+    oscillatorNode.frequency.value = freq
 
     gainNode.gain.setValueAtTime(0, this.state.audioContext.currentTime)
 
@@ -63,7 +63,7 @@ class AudioContext extends Component {
     if (this.state.oscillators.length > 0) {
       amp = maxAmplitude/this.state.oscillators.length
     }
-    console.log(amp)
+    console.log('amplitude',  amp)
     gainNode.gain.linearRampToValueAtTime(amp, this.state.audioContext.currentTime+playTime/2)
 
     oscillatorNode.start()
@@ -94,12 +94,13 @@ class AudioContext extends Component {
           <div>{this.state.audioContext ? this.state.audioContext.state : "Not Initialized"}</div>
           Oscillators:
           <div>{this.state.oscillators.length}</div>
-          {this.state.oscillators.map((osc) =>
+          {this.state.oscillators.map(([oscillatorNode, gainNode]) =>
             <Oscillator
               minFreq={minFreq}
               maxFreq={maxFreq}
-              key={osc.__resource_id__}
-              freq={osc.frequency.value}
+              key={oscillatorNode.__resource_id__}
+              freq={oscillatorNode.frequency.value}
+              gain={gainNode.gain.value}
               />
           )}
       </div>

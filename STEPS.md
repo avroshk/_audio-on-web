@@ -19,3 +19,4 @@
 1. Render oscillator count
   - Add oscillators to state
 2. Create Oscillator render component
+  - Add style 
