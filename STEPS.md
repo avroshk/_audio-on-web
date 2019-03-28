@@ -19,4 +19,10 @@
 1. Render oscillator count
   - Add oscillators to state
 2. Create Oscillator render component
-  - Add style 
+  - Add style
+  - Point out the problem (the rendered component is not always up-to-date with the playing audio. Render is only triggered at the start and end of the audio.)
+3. Draw Waveform
+  - Add scriptProcessorNode
+  - Add process function and wrote buffer to state
+  - yarn add recharts
+  - Create Waveform Component (Waveform renders but pretty quickly audio starts crackling and UI blows up and freezes. This is because we are letting React re-render the Waveform on state change.)

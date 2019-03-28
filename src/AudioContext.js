@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 
-import Oscillator from './Oscillator.js'
+import Oscillator from './Oscillator.js';
+import Waveform from './Waveform.js';
 
 const IS_WEB_AUDIO_SUPPORTED = window.AudioContext || window.webkitAudioContext ? true : false
 const audioCtx = IS_WEB_AUDIO_SUPPORTED ? window.AudioContext || window.webkitAudioContext : null
@@ -17,7 +18,8 @@ class AudioContext extends Component {
     super(props)
     this.state = {
       audioContext: IS_WEB_AUDIO_SUPPORTED ? new audioCtx() : null,
-      oscillators: []
+      oscillators: [],
+      waveformData: null,
     }
   }
 
@@ -36,13 +38,36 @@ class AudioContext extends Component {
     })
   }
 
+  process = (audioProcessingEvent) => {
+    let inputBuffer = audioProcessingEvent.inputBuffer;
+    let outputBuffer = audioProcessingEvent.outputBuffer;
+
+    // Loop through the output channels (in this case there is only one)
+    for (let channel = 0; channel < outputBuffer.numberOfChannels; channel++) {
+      let inputData = inputBuffer.getChannelData(channel);
+      let outputData = outputBuffer.getChannelData(channel);
+
+      if (channel === 0) {
+        this.setState({
+          waveformData: inputData
+        })
+      }
+
+      outputData.set(inputData)
+    }
+  }
+
   play = (e) => {
     let oscillatorNode = this.state.audioContext.createOscillator()
     let gainNode = this.state.audioContext.createGain()
+    let scriptProcessorNode = this.state.audioContext.createScriptProcessor(4096, 1, 1)
+    scriptProcessorNode.onaudioprocess = this.process
+
     this.addOscillator(oscillatorNode, gainNode)
 
     oscillatorNode
       .connect(gainNode)
+      .connect(scriptProcessorNode)
       .connect(this.state.audioContext.destination)
 
     let here = this
@@ -103,6 +128,7 @@ class AudioContext extends Component {
               gain={gainNode.gain.value}
               />
           )}
+          <Waveform data={this.state.waveformData} />
       </div>
     );
   }
