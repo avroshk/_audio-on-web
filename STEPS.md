@@ -26,3 +26,5 @@
   - Add process function and wrote buffer to state
   - yarn add recharts
   - Create Waveform Component (Waveform renders but pretty quickly audio starts crackling and UI blows up and freezes. This is because we are letting React re-render the Waveform on state change.)
+  - !!!!! FLAW! We have multiple ScriptProcessorNodes! :(  For every oscillator
+  - Restructure the Web Audio Graph so that ScriptProcessor Node is only created once
