@@ -28,3 +28,26 @@
   - Create Waveform Component (Waveform renders but pretty quickly audio starts crackling and UI blows up and freezes. This is because we are letting React re-render the Waveform on state change.)
   - !!!!! FLAW! We have multiple ScriptProcessorNodes! :(  For every oscillator
   - Restructure the Web Audio Graph so that ScriptProcessor Node is only created once
+
+--------
+4. Draw FFT
+  - yarn add meyda
+  - write FFT to a buffer
+  - Use Waveform component to display Freq Spectrum
+
+# Session 3
+1. Introduction to AudioWorkers
+ - Why?
+2. Create AudioWorker component
+
+# Session 4
+1. Recording Audio
+ - Create inputStream Node
+ - Makes sense to make AudioContext Component very specific for AudioContext and ScriptProcessorNode
+ - Move Oscillator code to oscillator component
+ - Maybe create a Graph component to orchestrate the playing
+ - demonstration of audio packet loss
+2. Playback audio
+
+# Session 5
+1. Using Redux to manage state across the application and making re-using of context easier
