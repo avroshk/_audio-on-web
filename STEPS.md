@@ -49,5 +49,12 @@
  - demonstration of audio packet loss
 2. Playback audio
 
-# Session 5
+# Session 6
 1. Using Redux to manage state across the application and making re-using of context easier
+ - It's nice to have one mast AudioContext but it is in no way a requirement. It's not a bad practice to have multiple AudioContexts. Maybe you are using two audio libraries that create their own AudioContexts. So, you'll have two AudioContexts. If you are building a WebAudio application, having one master AudioContext helps keep track of it.
+
+# Session 7
+1. Move all audio code to Web Workers.
+
+# Session 8: optional
+1. Web Speech API
